@@ -26,6 +26,12 @@ namespace dp_drawing
             textBox1.BackColor = selectedColor;
         }
 
+        private void canvas_Load(object sender, EventArgs e)
+        {
+            this.Paint += canvas_Paint;
+            this.Click += canvas_Click;
+        }
+
         private void canvas_Click(object sender, EventArgs e)
         {
             Console.WriteLine($@"Selected shape: {SelectedShape}");
@@ -51,9 +57,10 @@ namespace dp_drawing
             {
                 pb = shape.PictureBox;
                 this.Controls.Add(pb);
+                shapes.Add(shape);
                 pb.BringToFront();
             }catch{}
-            
+            this.Invalidate();
             //g.FillRectangle(sb, relativePoint.X, relativePoint.Y, 20, 20);
         }
 
@@ -79,6 +86,28 @@ namespace dp_drawing
         private void rectButton_Click(object sender, EventArgs e)
         {
             SelectedShape = Shapes.RECTANGLE;
+        }
+
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            if (SelectedShape == Shapes.ELLIPSE)
+            {
+
+                Graphics G = e.Graphics;
+                    using (Pen myPen = new Pen(System.Drawing.Color.MediumPurple, 5))
+                    {
+                    Point relativePoint =
+               (this.PointToClient(
+                   new Point(
+                       Cursor.Position.X,
+                       Cursor.Position.Y)));
+                    Rectangle myRectangle = new Rectangle(new Point(relativePoint.X, relativePoint.Y), new Size(0, 0));
+                            myRectangle.Inflate(new Size(20, 20));
+                            G.DrawEllipse(myPen, myRectangle);
+                        
+                    }
+                
+            }
         }
     }
 }
