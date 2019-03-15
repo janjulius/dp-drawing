@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace dp_drawing
 {
-    class Constants
+    static class Constants
     {
-        string name = "-";
+        static string name = "-";
+        public static int PreviewTransparency = 100;
     }
 }

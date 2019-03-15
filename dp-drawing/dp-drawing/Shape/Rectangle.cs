@@ -10,7 +10,7 @@ namespace dp_drawing.Shape
 {
     sealed class Rectangle : Shape
     {
-        public Rectangle(Color c, Point location, Size size) : base(c, location, size)
+        public Rectangle(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)
         {
             InitializeShape();
         }

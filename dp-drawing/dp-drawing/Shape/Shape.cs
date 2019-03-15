@@ -19,6 +19,7 @@ namespace dp_drawing.Shape
 
         public PictureBox PictureBox { get; private set; }
 
+        private bool Preview = false;
         private bool isMouseDown = false;
 
         /// <summary>
@@ -27,12 +28,13 @@ namespace dp_drawing.Shape
         /// <param name="c">Color for the shape</param>
         /// <param name="location">Location of the shape as System.Drawing.Point</param>
         /// <param name="size">Size of the shape as System.Drawing.Size</param>
-        protected Shape(Color c, Point location, Size size)
+        protected Shape(Color c, Point location, Size size, bool preview)
         {
             PictureBox = new PictureBox();
             Color = c;
             Position = location;
             Size = size;
+            Preview = preview;
         }
 
         public abstract void PaintShapeEvent(object sender, PaintEventArgs e);
@@ -42,7 +44,8 @@ namespace dp_drawing.Shape
             this.PictureBox.Location = this.Position;
             //this.PictureBox.Name = "";
             this.PictureBox.Size = new Size(this.Width, this.Height);
-            this.PictureBox.BackColor = this.Color;
+            var col = Color.FromArgb(Preview ? Constants.PreviewTransparency : 255, Color.R, Color.G, Color.B);
+            this.PictureBox.BackColor = col;
         }
 
         public virtual void MouseDownEvent(object sender, MouseEventArgs e)

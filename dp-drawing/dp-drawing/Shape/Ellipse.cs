@@ -10,7 +10,7 @@ namespace dp_drawing.Shape
 {
     sealed class Ellipse : Shape
     {
-        public Ellipse(Color c, Point location, Size size) : base(c, location, size)
+        public Ellipse(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)
         {
             PictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintShapeEvent);
             InitializeShape();
