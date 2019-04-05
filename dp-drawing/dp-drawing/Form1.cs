@@ -167,7 +167,7 @@ namespace dp_drawing
 
         private void RewriteControls()
         {
-            while (Controls.Count != ShapeStartIndex)
+            while (Controls.Count != (ShapeStartIndex +1))
             {
                 Controls.RemoveAt(0);
             }

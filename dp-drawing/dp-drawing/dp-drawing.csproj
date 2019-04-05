@@ -61,6 +61,9 @@
     <Compile Include="Shape\Ellipse.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Shape\EllipsePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Shape\Rectangle.cs">
       <SubType>Component</SubType>
     </Compile>

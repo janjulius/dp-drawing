@@ -13,6 +13,7 @@ namespace dp_drawing.Shape
         public Ellipse(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)
         {
             PictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintShapeEvent);
+            PictureBox = new EllipsePictureBox();
             InitializeShape();
         }
         

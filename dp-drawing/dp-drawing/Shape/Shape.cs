@@ -17,7 +17,7 @@ namespace dp_drawing.Shape
         public Point Position { get; set; }
         public Color Color { get; set; }
 
-        public PictureBox PictureBox { get; private set; }
+        public PictureBox PictureBox { get; set; }
 
         private bool Preview = false;
         private bool isMouseDown = false;
