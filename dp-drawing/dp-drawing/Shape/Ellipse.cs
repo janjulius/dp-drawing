@@ -19,11 +19,9 @@ namespace dp_drawing.Shape
         
         public override void InitializeShape()
         {
-            
             base.InitializeShape();
             Graphics g = PictureBox.CreateGraphics();
             //g.FillEllipse(new SolidBrush(this.Color), Location.X, Location.Y, Width, Height);
-            
         }
 
         public override void PaintShapeEvent(object sender, PaintEventArgs e)

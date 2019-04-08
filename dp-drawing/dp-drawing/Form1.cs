@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dp_drawing.Patterns.Command;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,8 +17,7 @@ namespace dp_drawing
         Graphics g = null;
         Color selectedColor = Color.Red;
         Shapes SelectedShape = Shapes.RECTANGLE;
-
-        List<Shape.Shape> shapes = new List<Shape.Shape>();
+        
         List<Control> ImportantControls = new List<Control>();
 
         Point[] measurePoint = new Point[2];
@@ -25,13 +25,17 @@ namespace dp_drawing
 
         bool MouseDown = false;
 
-        int ShapeStartIndex = 0;
-       
+        private int shapeStartIndex = 0;
+        
+        Stack<Command> commandStack = new Stack<Command>();
+
+        Stack<Command> redoStack = new Stack<Command>();
 
         public Form1()
         {
             InitializeComponent();
-            ShapeStartIndex = Controls.Count;
+            //ShapeStartIndex = Controls.Count;
+            DrawingInstance.Instance.ShapeStartIndex = Controls.Count;
             g = canvas.CreateGraphics();
             textBox1.BackColor = selectedColor;
         }
@@ -113,66 +117,42 @@ namespace dp_drawing
             if (measurePoint[0].X < measurePoint[1].X
                 && measurePoint[0].Y > measurePoint[1].Y) //from left bottom to right top
             {
-                DrawShape(new Point(measurePoint[0].X, measurePoint[1].Y), s, false);
+                ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[0].X, measurePoint[1].Y), s, false, selectedColor));
+                //DrawShape(new Point(measurePoint[0].X, measurePoint[1].Y), s, false);
             }
             else if (measurePoint[0].X > measurePoint[1].X
                && measurePoint[0].Y < measurePoint[1].Y) //from right top to left bottom
             {
-                DrawShape(new Point(measurePoint[1].X, measurePoint[0].Y), s, false);
+                ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[1].X, measurePoint[0].Y), s, false, selectedColor));
+                //DrawShape(new Point(measurePoint[1].X, measurePoint[0].Y), s, false);
             }
             else if (measurePoint[0].X > measurePoint[1].X
                 && measurePoint[0].Y > measurePoint[1].Y) //from right bottom to left top
             {
-                DrawShape(measurePoint[1], s,false);
+                ExecuteCommand(new DrawShape(SelectedShape, measurePoint[1], s, false, selectedColor));
+                //DrawShape(measurePoint[1], s,false);
             }
             else //from left top to right bottom
             {
-                DrawShape(measurePoint[0], s,false);
+                ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], s, false, selectedColor));
+                //DrawShape(measurePoint[0], s,false);
             }
         }
 
 
         private void DrawShape(Point location, Size size, bool preview)
         {
-            Console.WriteLine($@"Selected shape: {SelectedShape}");
             
-            Shape.Shape shape = null;
-            PictureBox pb = null;
-            switch (SelectedShape)
-            {
-                case Shapes.RECTANGLE:
-                    shape = new Shape.Rectangle(selectedColor, location, size, preview);
-                    break;
-                case Shapes.ELLIPSE:
-                    shape = new Shape.Ellipse(selectedColor, location, size, preview);
-                    break;
-                case Shapes.NONE:
-                    throw new NullReferenceException("Shape not found");
-            }
-            try
-            {
-                pb = shape.PictureBox;
-                this.Controls.Add(pb);
-                if (!preview) { 
-                    shapes.Add(shape);
-                    this.Controls.Add(shape);
-                    ShapeStartIndex++;
-                }
-                pb.BringToFront();
-            }
-            catch { }
-            this.Invalidate();
-            //g.FillRectangle(sb, relativePoint.X, relativePoint.Y, 20, 20);
         }
 
         private void RewriteControls()
         {
-            while (Controls.Count != (ShapeStartIndex +1))
-            {
-                Controls.RemoveAt(0);
-            }
-            this.Invalidate();
-            g.Clear(Color.Silver);
+            //while (Controls.Count != (DrawingInstance.Instance.ShapeStartIndex +1))
+            //{
+            //    Controls.RemoveAt(0);
+            //}
+            //this.Invalidate();
+            //g.Clear(Color.Silver);
         }
 
         private Point GetCursorRelativePoint()
@@ -189,7 +169,8 @@ namespace dp_drawing
             if (MouseDown)
             {
                 var size = GetShapeSize(measurePoint[0], GetCursorRelativePoint());
-                DrawShape(measurePoint[0], size, true);
+                ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], size, true, selectedColor));
+                //DrawShape(measurePoint[0], size, true);
                 Console.WriteLine($"m: {measurePoint[0]} , {size}");
             }
         }
@@ -198,6 +179,28 @@ namespace dp_drawing
         {
             var sub = Point.Subtract(a, new Size(b));
             return new Size(Math.Abs(sub.X), Math.Abs(sub.Y));
+        }
+
+        private bool ExecuteCommand(Command command)
+        {
+            redoStack.Clear();
+            commandStack.Push(command);
+            command.Execute();
+            return true;
+        }
+
+        private void UndoButton_Click(object sender, EventArgs e)
+        {
+            Command cmd = commandStack.Pop();
+            redoStack.Push(cmd);
+            cmd.Undo();
+        }
+
+        private void RedoButton_Click(object sender, EventArgs e)
+        {
+            Command cmd = redoStack.Pop();
+            commandStack.Push(cmd);
+            cmd.Redo();
         }
     }
 }

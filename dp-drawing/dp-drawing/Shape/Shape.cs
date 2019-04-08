@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Shape
 {
-    abstract class Shape : PictureBox
+    public abstract class Shape : PictureBox
     {
         public List<Shape> children = new List<Shape>();
 
