@@ -30,7 +30,6 @@ namespace dp_drawing.Patterns.Command
             shape.PictureBox.Left -= p.X;
             shape.PictureBox.BringToFront();
             shape.UpdatePosition();
-            Console.WriteLine($@"Moved from {oldLocation} to {p}");
         }
 
         private Point GetNewPosition()
@@ -49,7 +48,6 @@ namespace dp_drawing.Patterns.Command
             shape.PictureBox.Top = p.Y;
             shape.PictureBox.Left = p.X;
             shape.PictureBox.BringToFront();
-            Console.WriteLine($@"Moving back to to {shape.PictureBox.Location}");
         }
     }
 }
