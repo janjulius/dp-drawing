@@ -28,11 +28,6 @@ namespace dp_drawing
         bool MouseDown = false;
 
         private int shapeStartIndex = 0;
-        
-        Stack<Command> commandStack = new Stack<Command>();
-        Stack<Command> rubbishStack = new Stack<Command>();
-
-        Stack<Command> redoStack = new Stack<Command>();
 
         public Form1()
         {
@@ -104,11 +99,7 @@ namespace dp_drawing
         {
             MouseDown = true;
             measurePoint[0] = GetCursorRelativePoint();
-
-           //if (DrawingInstance.Instance.Shapes.Count != 0)
-           //{
-           //    focusedShape = GetShapeAtPoint(measurePoint[0]);
-           //}
+            
             if (DrawingInstance.Instance.FocusedShape != null)
             {
                 Console.WriteLine($@"selected shape with id: {DrawingInstance.Instance.FocusedShape.Id} is a {DrawingInstance.Instance.FocusedShape.GetType().Name}");
@@ -116,30 +107,12 @@ namespace dp_drawing
             }
         }
 
-        //private Shape.Shape GetShapeAtPoint(Point point)
-        //{
-        //    foreach(Shape.Shape shape in DrawingInstance.Instance.Shapes)
-        //    {
-        //        var x = shape.Location.X;
-        //        var y = shape.Location.Y;
-        //        var x2 = shape.Location.X + shape.size.Width;
-        //        var y2 = shape.Location.Y + shape.size.Height;
-        //        if((point.X > x && point.X < x2)
-        //            && (point.Y > y && point.Y < y2))
-        //        {
-        //            return shape;
-        //        }
-        //    }
-        //    return null;
-        //}
-
         private void canvas_MouseUp(object sender, MouseEventArgs e)
         {
             MouseDown = false;
             measurePoint[1] = GetCursorRelativePoint();
 
             var s = GetShapeSize(measurePoint[0], measurePoint[1]);
-            //Console.WriteLine($"{measurePoint[0]}, {measurePoint[1]}, {s}");
             
 
             if (measurePoint[0].X < measurePoint[1].X
@@ -189,44 +162,44 @@ namespace dp_drawing
 
         private bool ExecuteCommand(Command command)
         {
-            redoStack.Clear();
+            DrawingInstance.Instance.RedoStack.Clear();
             if(command is DrawShape)
             {
                 if (((DrawShape)command).IsPreview())
                 {
-                    if(rubbishStack.Count > 0)
+                    if (DrawingInstance.Instance.RubbishStack.Count > 0)
                     {
-                        var cmd = rubbishStack.Pop(); cmd.Undo();
+                        var cmd = DrawingInstance.Instance.RubbishStack.Pop(); cmd.Undo();
                     }
-                    rubbishStack.Push(command);
+                    DrawingInstance.Instance.RubbishStack.Push(command);
                     command.Execute();
                     return true;
                 }
                 else
                 {
-                    for(int i = rubbishStack.Count; i > 0; i--)
+                    for(int i = DrawingInstance.Instance.RubbishStack.Count; i > 0; i--)
                     {
-                        var cmd = rubbishStack.Pop();
+                        var cmd = DrawingInstance.Instance.RubbishStack.Pop();
                         cmd.Undo();
                     }
                 }
             }
-            commandStack.Push(command);
+            DrawingInstance.Instance.Commands.Push(command);
             command.Execute();
             return true;
         }
 
         private void UndoButton_Click(object sender, EventArgs e)
         {
-            Command cmd = commandStack.Pop();
-            redoStack.Push(cmd);
+            Command cmd = DrawingInstance.Instance.Commands.Pop();
+            DrawingInstance.Instance.RedoStack.Push(cmd);
             cmd.Undo();
         }
 
         private void RedoButton_Click(object sender, EventArgs e)
         {
-            Command cmd = redoStack.Pop();
-            commandStack.Push(cmd);
+            Command cmd = DrawingInstance.Instance.RedoStack.Pop();
+            DrawingInstance.Instance.Commands.Push(cmd);
             cmd.Redo();
         }
     }

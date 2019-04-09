@@ -13,7 +13,6 @@ namespace dp_drawing.Shape
     public abstract class Shape
     {
         public List<Shape> children = new List<Shape>();
-        Stack<Command> Commands = new Stack<Command>();
 
         public Size size { get; set; }
         public Point Position { get; set; }
@@ -28,6 +27,7 @@ namespace dp_drawing.Shape
 
         private Point[] mousePositions = new Point[3];
 
+        
         /// <summary>
         /// Create a shape
         /// </summary>
@@ -67,6 +67,12 @@ namespace dp_drawing.Shape
             isMouseDown = false;
         }
 
+        internal void UpdatePosition()
+        {
+            this.Position = new Point(PictureBox.Location.X, PictureBox.Location.Y);
+        }
+
+
         private void AddEvents()
         {
             PictureBox.MouseDown += setfocused_object;
@@ -84,7 +90,7 @@ namespace dp_drawing.Shape
         {
             mousePositions[1] = Cursor.Position;
             var cmd = new MoveShape(this, mousePositions[0], mousePositions[1]);
-            Commands.Push(cmd);
+            DrawingInstance.Instance.Commands.Push(cmd);
             cmd.Execute();
         }
     }

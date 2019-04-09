@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dp_drawing.Patterns.Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,11 @@ namespace dp_drawing
 
         public int ShapeStartIndex = 0;
         public List<Shape.Shape> Shapes = new List<Shape.Shape>();
-
+        
+        public Stack<Command> Commands = new Stack<Command>();
+        public Stack<Command> RubbishStack = new Stack<Command>();
+        public Stack<Command> RedoStack = new Stack<Command>();
+        
         private Shape.Shape focusedShape = null;
         public Shape.Shape FocusedShape {
             get
