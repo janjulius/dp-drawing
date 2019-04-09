@@ -11,6 +11,30 @@ namespace dp_drawing
         private static DrawingInstance instance = null;
 
         public int ShapeStartIndex = 0;
+        public List<Shape.Shape> Shapes = new List<Shape.Shape>();
+
+        private Shape.Shape focusedShape = null;
+        public Shape.Shape FocusedShape {
+            get
+            {
+                return focusedShape;
+            }
+            set
+            {
+                focusedShape = value;
+
+            }
+        }
+
+        private int curId = -1;
+        public int GenerateShapeId
+        {
+            get
+            {
+                curId++;
+                return curId;
+            }
+        }
 
         private DrawingInstance()
         {
@@ -20,8 +44,14 @@ namespace dp_drawing
         {
             get
             {
-                return instance ?? new DrawingInstance();
+                if(instance != null)
+                {
+                    return instance;
+                }
+                instance = new DrawingInstance();
+                return instance;
             }
         }
+        
     }
 }

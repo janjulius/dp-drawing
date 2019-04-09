@@ -11,13 +11,12 @@ namespace dp_drawing.Patterns.Command
     class DrawShape : Command
     {
         Shape.Shape shape = null;
-        PictureBox pb = null;
 
         Shapes SelectedShape = Shapes.NONE;
         Point location;
         Size size;
-        bool preview;
         Color selectedColor;
+        bool preview;
 
         public DrawShape(Shapes shape, Point location, Size size, bool preview, Color color)
         {
@@ -36,20 +35,22 @@ namespace dp_drawing.Patterns.Command
                     this.shape = new Shape.Ellipse(selectedColor, location, size, preview);
                     break;
             }
+            this.shape.Id = DrawingInstance.Instance.GenerateShapeId;
         }
 
         public override void Execute()
         {
             try
             {
-                pb = shape.PictureBox;
-                Form1.ActiveForm.Controls.Add(pb);
+                Form1.ActiveForm.Controls.Add(shape.PictureBox);
                 if (!preview)
                 {
                     Form1.ActiveForm.Controls.Add(shape);
                     DrawingInstance.Instance.ShapeStartIndex++;
+                    DrawingInstance.Instance.Shapes.Add(this.shape);
+                    Console.WriteLine($@"{location} + {size} = {location+size}");
                 }
-                pb.BringToFront();
+                shape.PictureBox.BringToFront();
             }
             catch { }
             Form1.ActiveForm.Invalidate();
@@ -63,9 +64,19 @@ namespace dp_drawing.Patterns.Command
 
         public override void Undo()
         {
+            Form1.ActiveForm.Controls.Remove(shape.PictureBox);
             Form1.ActiveForm.Controls.Remove(shape);
-            Form1.ActiveForm.Controls.Remove(pb);
+
+            if (!preview) 
+                DrawingInstance.Instance.Shapes.Remove(this.shape);
         }
+
+        public bool IsPreview()
+        {
+            return preview;
+        }
+        
+        
 
 
     }

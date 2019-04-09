@@ -17,7 +17,9 @@ namespace dp_drawing
         Graphics g = null;
         Color selectedColor = Color.Red;
         Shapes SelectedShape = Shapes.RECTANGLE;
-        
+
+        Shape.Shape focusedShape = null;
+
         List<Control> ImportantControls = new List<Control>();
 
         Point[] measurePoint = new Point[2];
@@ -28,6 +30,7 @@ namespace dp_drawing
         private int shapeStartIndex = 0;
         
         Stack<Command> commandStack = new Stack<Command>();
+        Stack<Command> rubbishStack = new Stack<Command>();
 
         Stack<Command> redoStack = new Stack<Command>();
 
@@ -53,7 +56,7 @@ namespace dp_drawing
 
         private void colorpicker_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Color picker opened");
+            //Console.WriteLine("Color picker opened");
             ColorDialog MyDialog = new ColorDialog();
             MyDialog.AllowFullOpen = true;
             MyDialog.ShowHelp = true;
@@ -101,8 +104,34 @@ namespace dp_drawing
         {
             MouseDown = true;
             measurePoint[0] = GetCursorRelativePoint();
-            
+
+           //if (DrawingInstance.Instance.Shapes.Count != 0)
+           //{
+           //    focusedShape = GetShapeAtPoint(measurePoint[0]);
+           //}
+            if (DrawingInstance.Instance.FocusedShape != null)
+            {
+                Console.WriteLine($@"selected shape with id: {DrawingInstance.Instance.FocusedShape.Id} is a {DrawingInstance.Instance.FocusedShape.GetType().Name}");
+                DrawingInstance.Instance.FocusedShape = null;
+            }
         }
+
+        //private Shape.Shape GetShapeAtPoint(Point point)
+        //{
+        //    foreach(Shape.Shape shape in DrawingInstance.Instance.Shapes)
+        //    {
+        //        var x = shape.Location.X;
+        //        var y = shape.Location.Y;
+        //        var x2 = shape.Location.X + shape.size.Width;
+        //        var y2 = shape.Location.Y + shape.size.Height;
+        //        if((point.X > x && point.X < x2)
+        //            && (point.Y > y && point.Y < y2))
+        //        {
+        //            return shape;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         private void canvas_MouseUp(object sender, MouseEventArgs e)
         {
@@ -110,49 +139,28 @@ namespace dp_drawing
             measurePoint[1] = GetCursorRelativePoint();
 
             var s = GetShapeSize(measurePoint[0], measurePoint[1]);
-            Console.WriteLine($"{measurePoint[0]}, {measurePoint[1]}, {s}");
-
-            RewriteControls();
+            //Console.WriteLine($"{measurePoint[0]}, {measurePoint[1]}, {s}");
+            
 
             if (measurePoint[0].X < measurePoint[1].X
                 && measurePoint[0].Y > measurePoint[1].Y) //from left bottom to right top
             {
                 ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[0].X, measurePoint[1].Y), s, false, selectedColor));
-                //DrawShape(new Point(measurePoint[0].X, measurePoint[1].Y), s, false);
             }
             else if (measurePoint[0].X > measurePoint[1].X
                && measurePoint[0].Y < measurePoint[1].Y) //from right top to left bottom
             {
                 ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[1].X, measurePoint[0].Y), s, false, selectedColor));
-                //DrawShape(new Point(measurePoint[1].X, measurePoint[0].Y), s, false);
             }
             else if (measurePoint[0].X > measurePoint[1].X
                 && measurePoint[0].Y > measurePoint[1].Y) //from right bottom to left top
             {
                 ExecuteCommand(new DrawShape(SelectedShape, measurePoint[1], s, false, selectedColor));
-                //DrawShape(measurePoint[1], s,false);
             }
             else //from left top to right bottom
             {
                 ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], s, false, selectedColor));
-                //DrawShape(measurePoint[0], s,false);
             }
-        }
-
-
-        private void DrawShape(Point location, Size size, bool preview)
-        {
-            
-        }
-
-        private void RewriteControls()
-        {
-            //while (Controls.Count != (DrawingInstance.Instance.ShapeStartIndex +1))
-            //{
-            //    Controls.RemoveAt(0);
-            //}
-            //this.Invalidate();
-            //g.Clear(Color.Silver);
         }
 
         private Point GetCursorRelativePoint()
@@ -170,8 +178,6 @@ namespace dp_drawing
             {
                 var size = GetShapeSize(measurePoint[0], GetCursorRelativePoint());
                 ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], size, true, selectedColor));
-                //DrawShape(measurePoint[0], size, true);
-                Console.WriteLine($"m: {measurePoint[0]} , {size}");
             }
         }
 
@@ -184,6 +190,27 @@ namespace dp_drawing
         private bool ExecuteCommand(Command command)
         {
             redoStack.Clear();
+            if(command is DrawShape)
+            {
+                if (((DrawShape)command).IsPreview())
+                {
+                    if(rubbishStack.Count > 0)
+                    {
+                        var cmd = rubbishStack.Pop(); cmd.Undo();
+                    }
+                    rubbishStack.Push(command);
+                    command.Execute();
+                    return true;
+                }
+                else
+                {
+                    for(int i = rubbishStack.Count; i > 0; i--)
+                    {
+                        var cmd = rubbishStack.Pop();
+                        cmd.Undo();
+                    }
+                }
+            }
             commandStack.Push(command);
             command.Execute();
             return true;
