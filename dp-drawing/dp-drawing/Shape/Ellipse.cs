@@ -12,7 +12,6 @@ namespace dp_drawing.Shape
     {
         public Ellipse(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)
         {
-            PictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintShapeEvent);
             PictureBox = new EllipsePictureBox();
             InitializeShape();
         }
@@ -22,17 +21,6 @@ namespace dp_drawing.Shape
             base.InitializeShape();
             Graphics g = PictureBox.CreateGraphics();
             //g.FillEllipse(new SolidBrush(this.Color), Location.X, Location.Y, Width, Height);
-        }
-
-        public override void PaintShapeEvent(object sender, PaintEventArgs e)
-        {
-            Graphics G = e.Graphics;
-            System.Drawing.Rectangle myRectangle = new System.Drawing.Rectangle(new Point(0, 0), new Size(0, 0));
-            myRectangle.Inflate(new Size(125, 100));
-            using (Pen myPen = new Pen(System.Drawing.Color.Green, 5))
-            {
-                G.DrawEllipse(myPen, myRectangle);
-            }
         }
     }
 }

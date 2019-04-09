@@ -12,19 +12,15 @@ namespace dp_drawing.Shape
     {
         public Rectangle(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)
         {
+            PictureBox = new PictureBox();
             InitializeShape();
-        }
-        
-        public override void PaintShapeEvent(object sender, PaintEventArgs e)
-        {
-            //e.Graphics.FillRectangle(new SolidBrush(color), rect);
         }
 
         public override void InitializeShape()
         {
             base.InitializeShape();
             Graphics g = PictureBox.CreateGraphics();
-            g.FillRectangle(new SolidBrush(this.Color), new RectangleF(Position.X, Position.Y, Width, Height));
+            g.FillRectangle(new SolidBrush(this.Color), new RectangleF(Position.X, Position.Y, size.Width, size.Height));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace dp_drawing.Patterns.Command
 
         public override void Execute()
         {
-            oldLocation = shape.Location;
+            oldLocation = shape.Position;
             Point p = GetNewPosition();
             shape.PictureBox.Top -= p.Y;
             shape.PictureBox.Left -= p.X;
@@ -43,7 +43,7 @@ namespace dp_drawing.Patterns.Command
 
         public override void Undo()
         {
-            shape.Location = oldLocation;
+            shape.Position = oldLocation;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Shape
 {
-    public abstract class Shape : PictureBox
+    public abstract class Shape
     {
         public List<Shape> children = new List<Shape>();
         Stack<Command> Commands = new Stack<Command>();
@@ -39,14 +39,9 @@ namespace dp_drawing.Shape
             PictureBox = new PictureBox();
             Color = c;
             Position = location;
-            size = size;
+            this.size = size;
             Preview = preview;
-
-            if (!preview)
-                AddEvents();
         }
-
-        public abstract void PaintShapeEvent(object sender, PaintEventArgs e);
 
         public virtual void InitializeShape()
         {
@@ -54,6 +49,9 @@ namespace dp_drawing.Shape
             this.PictureBox.Size = new Size(size.Width, size.Height);
             var col = Color.FromArgb(Preview ? Constants.PreviewTransparency : 255, Color.R, Color.G, Color.B);
             this.PictureBox.BackColor = col;
+
+            if (!Preview)
+                AddEvents();
         }
 
         public virtual void MouseDownEvent(object sender, MouseEventArgs e)

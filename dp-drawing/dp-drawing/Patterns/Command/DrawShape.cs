@@ -45,7 +45,6 @@ namespace dp_drawing.Patterns.Command
                 Form1.ActiveForm.Controls.Add(shape.PictureBox);
                 if (!preview)
                 {
-                    Form1.ActiveForm.Controls.Add(shape);
                     DrawingInstance.Instance.ShapeStartIndex++;
                     DrawingInstance.Instance.Shapes.Add(this.shape);
                     Console.WriteLine($@"{location} + {size} = {location+size}");
@@ -65,7 +64,6 @@ namespace dp_drawing.Patterns.Command
         public override void Undo()
         {
             Form1.ActiveForm.Controls.Remove(shape.PictureBox);
-            Form1.ActiveForm.Controls.Remove(shape);
 
             if (!preview) 
                 DrawingInstance.Instance.Shapes.Remove(this.shape);
