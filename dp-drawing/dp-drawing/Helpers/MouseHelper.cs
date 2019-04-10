@@ -13,5 +13,10 @@ namespace dp_drawing.Helpers
         {
             Cursor.Current = Cursors.SizeAll;
         }
+
+        public static void SetCursorStyle(Cursor style)
+        {
+            Cursor.Current = style;
+        }
     }
 }

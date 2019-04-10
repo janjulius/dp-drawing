@@ -20,10 +20,19 @@ namespace dp_drawing.Shape
 
         public PictureBox PictureBox { get; set; }
 
+        public SplitContainer SplitContainerH { get; set; }
+        public SplitContainer SplitContainerV { get; set; }
+
         public int Id { get; set; }
 
         private bool Preview = false;
         private bool isMouseDown = false;
+
+        private bool moving = false;
+        private bool resizing = false;
+        ResizeMode resizeMode;
+
+        private const int BorderSize = 10;
 
         private Point[] mousePositions = new Point[3];
 
@@ -49,6 +58,8 @@ namespace dp_drawing.Shape
             this.PictureBox.Size = new Size(size.Width, size.Height);
             var col = Color.FromArgb(Preview ? Constants.PreviewTransparency : 255, Color.R, Color.G, Color.B);
             this.PictureBox.BackColor = col;
+            SplitContainerH = new SplitContainer(); SplitContainerV = new SplitContainer();
+            SplitContainerH.Orientation = Orientation.Horizontal;
 
             if (!Preview)
                 AddEvents();
@@ -72,26 +83,168 @@ namespace dp_drawing.Shape
             this.Position = new Point(PictureBox.Location.X, PictureBox.Location.Y);
         }
 
+        internal void UpdateSize()
+        {
+            this.size = new Size(PictureBox.Size.Width, PictureBox.Size.Height);
+        }
+
+        internal void SetPosition(Point p)
+        {
+            PictureBox.Top = p.Y;
+            PictureBox.Left = p.X;
+            PictureBox.BringToFront();
+            UpdatePosition();
+        }
+
+        internal void SetSize(int width, int height)
+        {
+            PictureBox.Size = new Size(width, height);
+            PictureBox.BringToFront();
+            UpdateSize();
+        }
+        internal Point GetPosition()
+        {
+            return this.Position;
+        }
+
+        internal Size GetSize()
+        {
+            return this.size;
+        }
 
         private void AddEvents()
         {
             PictureBox.MouseDown += setfocused_object;
             PictureBox.MouseUp += release_object;
-            PictureBox.MouseHover += MouseHelper.set_cursor_style_move;
+            PictureBox.MouseHover += mouse_hover_event;
         }
 
         private void setfocused_object(object sender, EventArgs e)
         {
             mousePositions[0] = Cursor.Position;
             DrawingInstance.Instance.FocusedShape = this;
+
+            if (MouseIsOnEdge())
+            {
+                moving = false;
+                resizing = true;
+                resizeMode = GetResizeMode();
+            }
+            else
+            {
+                moving = true;
+                resizing = false;
+            }
         }
+
 
         private void release_object(object sender, EventArgs e)
         {
             mousePositions[1] = Cursor.Position;
-            var cmd = new MoveShape(this, mousePositions[0], mousePositions[1]);
-            DrawingInstance.Instance.Commands.Push(cmd);
-            cmd.Execute();
+            if (moving)
+            {
+                var cmd = new MoveShape(this, mousePositions[0], mousePositions[1]);
+                DrawingInstance.Instance.Commands.Push(cmd);
+                cmd.Execute();
+            }
+            else if (resizing)
+            {
+                var cmd = new ResizeShape(this, mousePositions[0], mousePositions[1], resizeMode);
+                DrawingInstance.Instance.Commands.Push(cmd);
+                cmd.Execute();
+            }
+        }
+
+        private void mouse_hover_event(object sender, EventArgs e)
+        {
+            if ((MouseIsOnBottomEdge() && MouseIsOnLeftEdge()) || (MouseIsOnRightEdge() && MouseIsOnTopEdge()))
+            {
+                MouseHelper.SetCursorStyle(Cursors.SizeNESW);
+            }
+            else if((MouseIsOnTopEdge() && MouseIsOnLeftEdge()) || (MouseIsOnBottomEdge() && MouseIsOnRightEdge()))
+            {
+                MouseHelper.SetCursorStyle(Cursors.SizeNWSE);
+            }
+            else if (MouseIsOnLeftEdge() || MouseIsOnRightEdge())
+            {
+                MouseHelper.SetCursorStyle(Cursors.SizeWE);
+            }
+            else if (MouseIsOnBottomEdge() || MouseIsOnTopEdge())
+            {
+                MouseHelper.SetCursorStyle(Cursors.SizeNS);
+            }
+            else
+            {
+                MouseHelper.SetCursorStyle(Cursors.SizeAll);
+            }
+        }
+
+        private bool MouseIsOnLeftEdge()
+        {
+            return Math.Abs(GetMousePositionRelativeToPictureBox().X) <= BorderSize ? true : false;
+        } 
+
+        private bool MouseIsOnTopEdge()
+        {
+            return Math.Abs(GetMousePositionRelativeToPictureBox().Y) <= BorderSize ? true : false;
+        }
+
+        private bool MouseIsOnRightEdge()
+        {
+            return Math.Abs(GetMousePositionRelativeToPictureBox().X - this.size.Width) <= BorderSize ? true : false;
+        }
+
+        private bool MouseIsOnBottomEdge()
+        {
+            return Math.Abs(GetMousePositionRelativeToPictureBox().Y - this.size.Height) <= BorderSize ? true : false;
+        }
+
+
+        private bool MouseIsOnEdge()
+        {
+            return (MouseIsOnRightEdge() || MouseIsOnLeftEdge() || MouseIsOnBottomEdge() || MouseIsOnTopEdge());
+        }
+
+        private Point GetMousePositionRelativeToPictureBox()
+        {
+            return PictureBox.PointToClient(Cursor.Position);
+        }
+
+        private ResizeMode GetResizeMode()
+        {
+            if(MouseIsOnLeftEdge() && MouseIsOnBottomEdge())
+            {
+                return ResizeMode.SW;
+            }
+            else if(MouseIsOnLeftEdge() && MouseIsOnTopEdge())
+            {
+                return ResizeMode.NW;
+            }
+            else if(MouseIsOnRightEdge() && MouseIsOnTopEdge())
+            {
+                return ResizeMode.NE;
+            }
+            else if(MouseIsOnRightEdge() && MouseIsOnBottomEdge())
+            {
+                return ResizeMode.SE;
+            }
+            else if (MouseIsOnLeftEdge())
+            {
+                return ResizeMode.W;
+            }
+            else if (MouseIsOnRightEdge())
+            {
+                return ResizeMode.E;
+            }
+            else if (MouseIsOnTopEdge())
+            {
+                return ResizeMode.N;
+            }
+            else if (MouseIsOnBottomEdge())
+            {
+                return ResizeMode.S;
+            }
+            throw new NotImplementedException();
         }
     }
 }

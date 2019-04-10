@@ -56,11 +56,6 @@ namespace dp_drawing.Patterns.Command
             //g.FillRectangle(sb, relativePoint.X, relativePoint.Y, 20, 20);
         }
 
-        public override void Redo()
-        {
-            this.Execute();
-        }
-
         public override void Undo()
         {
             Form1.ActiveForm.Controls.Remove(shape.PictureBox);

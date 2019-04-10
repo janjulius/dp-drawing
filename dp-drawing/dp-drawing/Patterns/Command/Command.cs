@@ -12,6 +12,6 @@ namespace dp_drawing.Patterns.Command
 
         public abstract void Undo();
 
-        public abstract void Redo();
+        public virtual void Redo() => this.Execute();
     }
 }

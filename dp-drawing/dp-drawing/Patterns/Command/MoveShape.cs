@@ -26,10 +26,9 @@ namespace dp_drawing.Patterns.Command
         {
             oldLocation = shape.Position;
             Point p = GetNewPosition();
-            shape.PictureBox.Top -= p.Y;
-            shape.PictureBox.Left -= p.X;
-            shape.PictureBox.BringToFront();
-            shape.UpdatePosition();
+            shape.SetPosition(new Point(
+                (shape.PictureBox.Left - p.X),
+                (shape.PictureBox.Top - p.Y)));
         }
 
         private Point GetNewPosition()
@@ -39,15 +38,16 @@ namespace dp_drawing.Patterns.Command
 
         public override void Redo()
         {
-            this.Execute();
+            Point p = GetNewPosition();
+            shape.SetPosition(new Point(
+                (shape.PictureBox.Left - p.X),
+                (shape.PictureBox.Top - p.Y)));
         }
 
         public override void Undo()
         {
             var p  = oldLocation;
-            shape.PictureBox.Top = p.Y;
-            shape.PictureBox.Left = p.X;
-            shape.PictureBox.BringToFront();
+            shape.SetPosition(p);
         }
     }
 }

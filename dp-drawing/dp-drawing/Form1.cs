@@ -149,8 +149,30 @@ namespace dp_drawing
         {
             if (MouseDown)
             {
-                var size = GetShapeSize(measurePoint[0], GetCursorRelativePoint());
-                ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], size, true, selectedColor));
+                measurePoint[1] = GetCursorRelativePoint();
+
+                var s = GetShapeSize(measurePoint[0], measurePoint[1]);
+
+
+                if (measurePoint[0].X < measurePoint[1].X
+                    && measurePoint[0].Y > measurePoint[1].Y) //from left bottom to right top
+                {
+                    ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[0].X, measurePoint[1].Y), s, true, selectedColor));
+                }
+                else if (measurePoint[0].X > measurePoint[1].X
+                   && measurePoint[0].Y < measurePoint[1].Y) //from right top to left bottom
+                {
+                    ExecuteCommand(new DrawShape(SelectedShape, new Point(measurePoint[1].X, measurePoint[0].Y), s, true, selectedColor));
+                }
+                else if (measurePoint[0].X > measurePoint[1].X
+                    && measurePoint[0].Y > measurePoint[1].Y) //from right bottom to left top
+                {
+                    ExecuteCommand(new DrawShape(SelectedShape, measurePoint[1], s, true, selectedColor));
+                }
+                else //from left top to right bottom
+                {
+                    ExecuteCommand(new DrawShape(SelectedShape, measurePoint[0], s, true, selectedColor));
+                }
             }
         }
 

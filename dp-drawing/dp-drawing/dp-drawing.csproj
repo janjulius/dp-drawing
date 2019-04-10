@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DrawingInstance.cs" />
+    <Compile Include="Enums\ResizeMode.cs" />
     <Compile Include="Enums\Shapes.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Form1.cs">
@@ -60,6 +61,7 @@
     <Compile Include="Patterns\Command\Command.cs" />
     <Compile Include="Patterns\Command\DrawShape.cs" />
     <Compile Include="Patterns\Command\MoveShape.cs" />
+    <Compile Include="Patterns\Command\ResizeShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape\Ellipse.cs">
