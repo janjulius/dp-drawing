@@ -230,7 +230,10 @@ namespace dp_drawing
         {
             if (DrawingInstance.Instance.FocusedShape != null || DrawingInstance.Instance.FocusedShapes.Count != 0)
             {
-                DrawingInstance.Instance.FocusedShape.children = new List<Shape.Shape>(DrawingInstance.Instance.FocusedShapes);
+                foreach(var shap in DrawingInstance.Instance.FocusedShapes)
+                {
+                    DrawingInstance.Instance.FocusedShape.AddChild(shap);
+                }
                 DrawingInstance.Instance.FocusedShape = null;
                 DrawingInstance.Instance.FocusedShapes.Clear();
                 MessageBox.Show("Group created");

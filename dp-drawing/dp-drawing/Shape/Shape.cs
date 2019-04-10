@@ -1,6 +1,5 @@
 ﻿using dp_drawing.Helpers;
 using dp_drawing.Patterns.Command;
-using dp_drawing.Patterns.Composite;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +12,7 @@ namespace dp_drawing.Shape
 {
     public abstract class Shape
     {
-        public List<Shape> children = new List<Shape>();
+        private List<Shape> children = new List<Shape>();
 
         public Size size { get; set; }
         public Point Position { get; set; }
@@ -290,6 +289,25 @@ namespace dp_drawing.Shape
                 return ResizeMode.S;
             }
             throw new NotImplementedException();
+        }
+
+        public void AddChild(Shape c)
+        {
+            this.children.Add(c);
+        }
+
+        public void RemoveChild(Shape c)
+        {
+            this.children.Remove(c);
+        }
+
+        public void DisplayDepth(int depth)
+        {
+            foreach (Shape child in children)
+            {
+                child.DisplayDepth(depth + 2);
+            }
+
         }
     }
 }
