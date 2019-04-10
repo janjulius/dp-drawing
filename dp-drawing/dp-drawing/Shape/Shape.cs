@@ -1,5 +1,6 @@
 ﻿using dp_drawing.Helpers;
 using dp_drawing.Patterns.Command;
+using dp_drawing.Patterns.Composite;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using dp_drawing.Ornaments;
 
 namespace dp_drawing.Shape
 {
-    public abstract class Shape
+    public abstract class Shape : Component<Shape>
     {
         private List<Shape> children = new List<Shape>();
 
@@ -33,6 +35,7 @@ namespace dp_drawing.Shape
 
         private Point[] mousePositions = new Point[3];
 
+        private List<Ornament> ornament = new List<Ornament>();
         
         /// <summary>
         /// Create a shape
@@ -141,6 +144,16 @@ namespace dp_drawing.Shape
         internal Size GetSize()
         {
             return this.size;
+        }
+
+        internal void AddOrnament(Ornament o)
+        {
+            ornament.Add(o);
+        }
+
+        internal void RemoveOrnament(Ornament o)
+        {
+            ornament.Remove(o);
         }
 
         private void AddEvents()
@@ -291,23 +304,14 @@ namespace dp_drawing.Shape
             throw new NotImplementedException();
         }
 
-        public void AddChild(Shape c)
+        public override void AddChild(Shape c)
         {
             this.children.Add(c);
         }
-
-        public void RemoveChild(Shape c)
+        
+        public override void RemoveChild(Shape c)
         {
             this.children.Remove(c);
-        }
-
-        public void DisplayDepth(int depth)
-        {
-            foreach (Shape child in children)
-            {
-                child.DisplayDepth(depth + 2);
-            }
-
         }
     }
 }

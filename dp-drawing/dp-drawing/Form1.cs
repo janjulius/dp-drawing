@@ -1,4 +1,5 @@
-﻿using dp_drawing.Patterns.Command;
+﻿using dp_drawing.Helpers;
+using dp_drawing.Patterns.Command;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,8 @@ namespace dp_drawing
         bool MouseDown = false;
 
         private int shapeStartIndex = 0;
+
+        string ornamentText = "Placeholder";
 
         public Form1()
         {
@@ -240,6 +243,27 @@ namespace dp_drawing
                 return;
             }
             MessageBox.Show("You need at least 2 shapes to make a group you fucking retard", "lmao?");
+        }
+
+        private void AddOrnament_Click(object sender, EventArgs e)
+        {
+            if(DrawingInstance.Instance.FocusedShape != null)
+            {
+               ExecuteCommand(new AddOrnament(
+                    DrawingInstance.Instance.FocusedShape,
+                    new Ornaments.Ornament(
+                       ornamentText,
+                        OrnamentHelper.GetOrnamentOrientationFromString(OrnamentComboBox.Text),
+                        DrawingInstance.Instance.FocusedShape)));
+                return;
+            }
+            MessageBox.Show("You need to select a shape");
+        }
+
+        private void OrnamentTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox objTextBox = (TextBox)sender;
+            ornamentText = objTextBox.Text;
         }
     }
 }

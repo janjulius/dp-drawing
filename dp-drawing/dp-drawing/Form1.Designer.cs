@@ -36,8 +36,21 @@
             this.ellipseButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
             this.RedoButton = new System.Windows.Forms.Button();
+            this.AddOrnament = new System.Windows.Forms.Button();
+            this.OrnamentTextBox = new System.Windows.Forms.TextBox();
+            this.OrnamentComboBox = new System.Windows.Forms.ComboBox();
             MakeGroupButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // MakeGroupButton
+            // 
+            MakeGroupButton.Location = new System.Drawing.Point(794, 9);
+            MakeGroupButton.Name = "MakeGroupButton";
+            MakeGroupButton.Size = new System.Drawing.Size(75, 23);
+            MakeGroupButton.TabIndex = 4;
+            MakeGroupButton.Text = "Make Group";
+            MakeGroupButton.UseVisualStyleBackColor = true;
+            MakeGroupButton.Click += new System.EventHandler(this.MakeGroupButton_Click);
             // 
             // canvas
             // 
@@ -45,7 +58,7 @@
             this.canvas.BackColor = System.Drawing.Color.Silver;
             this.canvas.Location = new System.Drawing.Point(12, 39);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(776, 399);
+            this.canvas.Size = new System.Drawing.Size(1045, 523);
             this.canvas.TabIndex = 0;
             this.canvas.Click += new System.EventHandler(this.canvas_Click);
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
@@ -93,7 +106,7 @@
             // 
             // UndoButton
             // 
-            this.UndoButton.Location = new System.Drawing.Point(713, 10);
+            this.UndoButton.Location = new System.Drawing.Point(956, 10);
             this.UndoButton.Name = "UndoButton";
             this.UndoButton.Size = new System.Drawing.Size(75, 23);
             this.UndoButton.TabIndex = 2;
@@ -103,7 +116,7 @@
             // 
             // RedoButton
             // 
-            this.RedoButton.Location = new System.Drawing.Point(632, 12);
+            this.RedoButton.Location = new System.Drawing.Point(875, 9);
             this.RedoButton.Name = "RedoButton";
             this.RedoButton.Size = new System.Drawing.Size(75, 23);
             this.RedoButton.TabIndex = 3;
@@ -111,21 +124,46 @@
             this.RedoButton.UseVisualStyleBackColor = true;
             this.RedoButton.Click += new System.EventHandler(this.RedoButton_Click);
             // 
-            // MakeGroupButton
+            // AddOrnament
             // 
-            MakeGroupButton.Location = new System.Drawing.Point(497, 13);
-            MakeGroupButton.Name = "MakeGroupButton";
-            MakeGroupButton.Size = new System.Drawing.Size(75, 23);
-            MakeGroupButton.TabIndex = 4;
-            MakeGroupButton.Text = "Make Group";
-            MakeGroupButton.UseVisualStyleBackColor = true;
-            MakeGroupButton.Click += new System.EventHandler(this.MakeGroupButton_Click);
+            this.AddOrnament.Location = new System.Drawing.Point(698, 9);
+            this.AddOrnament.Name = "AddOrnament";
+            this.AddOrnament.Size = new System.Drawing.Size(90, 23);
+            this.AddOrnament.TabIndex = 5;
+            this.AddOrnament.Text = "Add Ornament";
+            this.AddOrnament.UseVisualStyleBackColor = true;
+            this.AddOrnament.Click += new System.EventHandler(this.AddOrnament_Click);
+            // 
+            // OrnamentTextBox
+            // 
+            this.OrnamentTextBox.Location = new System.Drawing.Point(324, 9);
+            this.OrnamentTextBox.Name = "OrnamentTextBox";
+            this.OrnamentTextBox.Size = new System.Drawing.Size(241, 20);
+            this.OrnamentTextBox.TabIndex = 6;
+            this.OrnamentTextBox.Text = "Yeet";
+            this.OrnamentTextBox.TextChanged += new System.EventHandler(this.OrnamentTextBox_TextChanged);
+            // 
+            // OrnamentComboBox
+            // 
+            this.OrnamentComboBox.FormattingEnabled = true;
+            this.OrnamentComboBox.Items.AddRange(new object[] {
+            "Top",
+            "Right",
+            "Bottom",
+            "Left"});
+            this.OrnamentComboBox.Location = new System.Drawing.Point(571, 9);
+            this.OrnamentComboBox.Name = "OrnamentComboBox";
+            this.OrnamentComboBox.Size = new System.Drawing.Size(121, 21);
+            this.OrnamentComboBox.TabIndex = 7;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1069, 574);
+            this.Controls.Add(this.OrnamentComboBox);
+            this.Controls.Add(this.OrnamentTextBox);
+            this.Controls.Add(this.AddOrnament);
             this.Controls.Add(MakeGroupButton);
             this.Controls.Add(this.RedoButton);
             this.Controls.Add(this.UndoButton);
@@ -150,6 +188,9 @@
         private System.Windows.Forms.Button ellipseButton;
         private System.Windows.Forms.Button UndoButton;
         private System.Windows.Forms.Button RedoButton;
+        private System.Windows.Forms.Button AddOrnament;
+        private System.Windows.Forms.TextBox OrnamentTextBox;
+        private System.Windows.Forms.ComboBox OrnamentComboBox;
     }
 }
 
