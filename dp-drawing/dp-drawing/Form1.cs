@@ -15,7 +15,7 @@ namespace dp_drawing
     public partial class Form1 : Form
     {
         Graphics g = null;
-        Color selectedColor = Color.Red;
+        Color selectedColor = Color.MediumPurple;
         Shapes SelectedShape = Shapes.RECTANGLE;
 
         Shape.Shape focusedShape = null;
@@ -102,7 +102,8 @@ namespace dp_drawing
             
             if (DrawingInstance.Instance.FocusedShape != null)
             {
-                Console.WriteLine($@"selected shape with id: {DrawingInstance.Instance.FocusedShape.Id} is a {DrawingInstance.Instance.FocusedShape.GetType().Name}");
+                //Console.WriteLine($@"selected shape with id: {DrawingInstance.Instance.FocusedShape.Id} is a {DrawingInstance.Instance.FocusedShape.GetType().Name}");
+                DrawingInstance.Instance.FocusedShapes.Clear();
                 DrawingInstance.Instance.FocusedShape = null;
             }
         }
@@ -223,6 +224,17 @@ namespace dp_drawing
             Command cmd = DrawingInstance.Instance.RedoStack.Pop();
             DrawingInstance.Instance.Commands.Push(cmd);
             cmd.Redo();
+        }
+
+        private void MakeGroupButton_Click(object sender, EventArgs e)
+        {
+            if (DrawingInstance.Instance.FocusedShape != null || DrawingInstance.Instance.FocusedShapes.Count != 0)
+            {
+                DrawingInstance.Instance.FocusedShape.children = new List<Shape.Shape>(DrawingInstance.Instance.FocusedShapes);
+                DrawingInstance.Instance.FocusedShape = null;
+                DrawingInstance.Instance.FocusedShapes.Clear();
+                Console.WriteLine("made a group");
+            }
         }
     }
 }

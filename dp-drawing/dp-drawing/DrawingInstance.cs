@@ -17,7 +17,9 @@ namespace dp_drawing
         public Stack<Command> Commands = new Stack<Command>();
         public Stack<Command> RubbishStack = new Stack<Command>();
         public Stack<Command> RedoStack = new Stack<Command>();
-        
+
+        public List<Shape.Shape> FocusedShapes = new List<Shape.Shape>();
+
         private Shape.Shape focusedShape = null;
         public Shape.Shape FocusedShape {
             get

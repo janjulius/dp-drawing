@@ -27,6 +27,7 @@ namespace dp_drawing.Patterns.Command
             this.resizeMode = resizeMode;
         }
 
+        //TODO make size not negative ever
         public override void Execute()
         {
             oldSize = shape.GetSize();
@@ -34,40 +35,40 @@ namespace dp_drawing.Patterns.Command
             switch (resizeMode)
             {
                 case ResizeMode.N:
-                    shape.SetPosition(new Point(shape.GetPosition().X, shape.GetPosition().Y - sizeDifference.Height));
-                    shape.SetSize(shape.GetSize().Width, shape.GetSize().Height + sizeDifference.Height);
+                    shape.OffsetPosition(new Point(0,sizeDifference.Height));
+                    shape.IncreaseSize(0, sizeDifference.Height);
                     break;
 
                 case ResizeMode.S:
-                    shape.SetSize(shape.GetSize().Width, shape.GetSize().Height - sizeDifference.Height);
+                    shape.IncreaseSize(0, -sizeDifference.Height);
                     break;
 
                 case ResizeMode.E:
-                    shape.SetSize(shape.GetSize().Width - sizeDifference.Width, shape.GetSize().Height);
+                    shape.IncreaseSize(-sizeDifference.Width, 0);
                     break;
 
                 case ResizeMode.W:
-                    shape.SetPosition(new Point(shape.GetPosition().X - sizeDifference.Width, shape.GetPosition().Y));
-                    shape.SetSize(shape.GetSize().Width + sizeDifference.Width, shape.GetSize().Height);
+                    shape.OffsetPosition(new Point(sizeDifference.Width, 0));
+                    shape.IncreaseSize(sizeDifference.Width, 0);
                     break;
 
                 case ResizeMode.NW:
-                    shape.SetPosition(new Point(shape.GetPosition().X - sizeDifference.Width, shape.GetPosition().Y - sizeDifference.Height));
-                    shape.SetSize(shape.GetSize().Width + sizeDifference.Width, shape.GetSize().Height + sizeDifference.Height);
+                    shape.OffsetPosition(new Point(sizeDifference.Width, sizeDifference.Height));
+                    shape.IncreaseSize(sizeDifference.Width,sizeDifference.Height);
                     break;
 
                 case ResizeMode.NE:
-                    shape.SetPosition(new Point(shape.GetPosition().X, shape.GetPosition().Y - sizeDifference.Height));
-                    shape.SetSize(shape.GetSize().Width - sizeDifference.Width, shape.GetSize().Height + sizeDifference.Height);
+                    shape.OffsetPosition(new Point(0, sizeDifference.Height));
+                    shape.IncreaseSize(-sizeDifference.Width, sizeDifference.Height);
                     break;
 
                 case ResizeMode.SW:
-                    shape.SetPosition(new Point(shape.GetPosition().X - sizeDifference.Width, shape.GetPosition().Y));
-                    shape.SetSize(shape.GetSize().Width + sizeDifference.Width, shape.GetSize().Height - sizeDifference.Height);
+                    shape.OffsetPosition(new Point(sizeDifference.Width, 0));
+                    shape.IncreaseSize(sizeDifference.Width, -sizeDifference.Height);
                     break;
 
                 case ResizeMode.SE:
-                    shape.SetSize(shape.GetSize().Width - sizeDifference.Width, shape.GetSize().Height - sizeDifference.Height);
+                    shape.IncreaseSize(-sizeDifference.Width, -sizeDifference.Height);
                     break;
 
                 default:
@@ -78,8 +79,8 @@ namespace dp_drawing.Patterns.Command
 
         public override void Undo()
         {
-            shape.SetSize(oldSize.Width, oldSize.Height);
-            shape.SetPosition(oldPosition);
+            shape.IncreaseSize(oldSize.Width - shape.size.Width, oldSize.Height - shape.size.Height);
+            shape.OffsetPosition(new Point(shape.Position.X-oldPosition.X, shape.Position.Y-oldPosition.Y));
         }
     }
 }

@@ -26,9 +26,9 @@ namespace dp_drawing.Patterns.Command
         {
             oldLocation = shape.Position;
             Point p = GetNewPosition();
-            shape.SetPosition(new Point(
-                (shape.PictureBox.Left - p.X),
-                (shape.PictureBox.Top - p.Y)));
+            shape.OffsetPosition(new Point(
+                (p.X),
+                (p.Y)));
         }
 
         private Point GetNewPosition()

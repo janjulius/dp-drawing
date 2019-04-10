@@ -20,9 +20,6 @@ namespace dp_drawing.Shape
 
         public PictureBox PictureBox { get; set; }
 
-        public SplitContainer SplitContainerH { get; set; }
-        public SplitContainer SplitContainerV { get; set; }
-
         public int Id { get; set; }
 
         private bool Preview = false;
@@ -58,8 +55,6 @@ namespace dp_drawing.Shape
             this.PictureBox.Size = new Size(size.Width, size.Height);
             var col = Color.FromArgb(Preview ? Constants.PreviewTransparency : 255, Color.R, Color.G, Color.B);
             this.PictureBox.BackColor = col;
-            SplitContainerH = new SplitContainer(); SplitContainerV = new SplitContainer();
-            SplitContainerH.Orientation = Orientation.Horizontal;
 
             if (!Preview)
                 AddEvents();
@@ -92,6 +87,24 @@ namespace dp_drawing.Shape
         {
             PictureBox.Top = p.Y;
             PictureBox.Left = p.X;
+            foreach(var child in children)
+            {
+                child.SetPosition(p);
+            }
+            PictureBox.BringToFront();
+            UpdatePosition();
+        }
+
+        internal void OffsetPosition(Point p)
+        {
+            var leftOffset = PictureBox.Left - p.X;
+            var rightOffset = PictureBox.Top - p.Y;
+            PictureBox.Left = leftOffset;
+            PictureBox.Top = rightOffset;
+            foreach (var child in children)
+            {
+                child.OffsetPosition(p);
+            }
             PictureBox.BringToFront();
             UpdatePosition();
         }
@@ -99,6 +112,24 @@ namespace dp_drawing.Shape
         internal void SetSize(int width, int height)
         {
             PictureBox.Size = new Size(width, height);
+            foreach(var child in children)
+            {
+                child.IncreaseSize(width, height);
+            }
+            PictureBox.BringToFront();
+            UpdateSize();
+        }
+
+        internal void IncreaseSize(int width, int height)
+        {
+            PictureBox.Size = new Size(
+                PictureBox.Size.Width + width,
+                PictureBox.Size.Height + height
+                );
+            foreach(var child in children)
+            {
+                child.IncreaseSize(width, height);
+            }
             PictureBox.BringToFront();
             UpdateSize();
         }
@@ -122,18 +153,31 @@ namespace dp_drawing.Shape
         private void setfocused_object(object sender, EventArgs e)
         {
             mousePositions[0] = Cursor.Position;
-            DrawingInstance.Instance.FocusedShape = this;
 
-            if (MouseIsOnEdge())
+            if (Control.ModifierKeys != Keys.Shift)
             {
-                moving = false;
-                resizing = true;
-                resizeMode = GetResizeMode();
+                if (MouseIsOnEdge())
+                {
+                    moving = false;
+                    resizing = true;
+                    resizeMode = GetResizeMode();
+                }
+                else
+                {
+                    moving = true;
+                    resizing = false;
+                }
             }
             else
             {
-                moving = true;
-                resizing = false;
+                if (DrawingInstance.Instance.FocusedShape != null)
+                {
+                    DrawingInstance.Instance.FocusedShapes.Add(this);
+                }
+                else
+                {
+                    DrawingInstance.Instance.FocusedShape = this;
+                }
             }
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Button MakeGroupButton;
             this.canvas = new System.Windows.Forms.Panel();
             this.colorpicker = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -35,6 +36,7 @@
             this.ellipseButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
             this.RedoButton = new System.Windows.Forms.Button();
+            MakeGroupButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // canvas
@@ -109,11 +111,22 @@
             this.RedoButton.UseVisualStyleBackColor = true;
             this.RedoButton.Click += new System.EventHandler(this.RedoButton_Click);
             // 
+            // MakeGroupButton
+            // 
+            MakeGroupButton.Location = new System.Drawing.Point(497, 13);
+            MakeGroupButton.Name = "MakeGroupButton";
+            MakeGroupButton.Size = new System.Drawing.Size(75, 23);
+            MakeGroupButton.TabIndex = 4;
+            MakeGroupButton.Text = "Make Group";
+            MakeGroupButton.UseVisualStyleBackColor = true;
+            MakeGroupButton.Click += new System.EventHandler(this.MakeGroupButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(MakeGroupButton);
             this.Controls.Add(this.RedoButton);
             this.Controls.Add(this.UndoButton);
             this.Controls.Add(this.ellipseButton);
