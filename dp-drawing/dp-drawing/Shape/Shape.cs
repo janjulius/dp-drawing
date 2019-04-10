@@ -1,5 +1,6 @@
 ﻿using dp_drawing.Helpers;
 using dp_drawing.Patterns.Command;
+using dp_drawing.Patterns.Composite;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

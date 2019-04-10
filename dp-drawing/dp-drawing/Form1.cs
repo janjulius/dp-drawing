@@ -233,8 +233,10 @@ namespace dp_drawing
                 DrawingInstance.Instance.FocusedShape.children = new List<Shape.Shape>(DrawingInstance.Instance.FocusedShapes);
                 DrawingInstance.Instance.FocusedShape = null;
                 DrawingInstance.Instance.FocusedShapes.Clear();
-                Console.WriteLine("made a group");
+                MessageBox.Show("Group created");
+                return;
             }
+            MessageBox.Show("You need at least 2 shapes to make a group you fucking retard", "lmao?");
         }
     }
 }
