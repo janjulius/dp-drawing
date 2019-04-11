@@ -35,7 +35,7 @@ namespace dp_drawing.Shape
 
         private Point[] mousePositions = new Point[3];
 
-        private List<Ornament> ornament = new List<Ornament>();
+        private List<Ornament> ornaments = new List<Ornament>();
         
         /// <summary>
         /// Create a shape
@@ -79,11 +79,19 @@ namespace dp_drawing.Shape
         internal void UpdatePosition()
         {
             this.Position = new Point(PictureBox.Location.X, PictureBox.Location.Y);
+            foreach (Ornament o in ornaments)
+            {
+                o.UpdatePosition();
+            }
         }
 
         internal void UpdateSize()
         {
             this.size = new Size(PictureBox.Size.Width, PictureBox.Size.Height);
+            foreach (Ornament o in ornaments)
+            {
+                o.UpdatePosition();
+            }
         }
 
         internal void SetPosition(Point p)
@@ -148,12 +156,12 @@ namespace dp_drawing.Shape
 
         internal void AddOrnament(Ornament o)
         {
-            ornament.Add(o);
+            ornaments.Add(o);
         }
 
         internal void RemoveOrnament(Ornament o)
         {
-            ornament.Remove(o);
+            ornaments.Remove(o);
         }
 
         private void AddEvents()
@@ -183,14 +191,9 @@ namespace dp_drawing.Shape
             }
             else
             {
-                if (DrawingInstance.Instance.FocusedShape != null)
-                {
-                    DrawingInstance.Instance.FocusedShapes.Add(this);
-                }
-                else
-                {
-                    DrawingInstance.Instance.FocusedShape = this;
-                }
+                var cmd = new SelectShape(this);
+                DrawingInstance.Instance.Commands.Push(cmd);
+                cmd.Execute();
             }
         }
 
@@ -312,6 +315,11 @@ namespace dp_drawing.Shape
         public override void RemoveChild(Shape c)
         {
             this.children.Remove(c);
+        }
+
+        public void ClearChildren()
+        {
+            this.children.Clear();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace dp_drawing.Patterns.Command
         Point oldPoint;
         Point newPoint;
         Point oldLocation;
+        Point undoLocation;
 
         public MoveShape(Shape.Shape shape, Point oldPoint, Point newPoint)
         {
@@ -38,16 +39,19 @@ namespace dp_drawing.Patterns.Command
 
         public override void Redo()
         {
-            Point p = GetNewPosition();
-            shape.SetPosition(new Point(
-                (shape.PictureBox.Left - p.X),
-                (shape.PictureBox.Top - p.Y)));
+            var p = undoLocation;
+            var s = shape.GetPosition();
+            Point offset = new Point(s.X - p.X, s.Y - p.Y);
+            shape.OffsetPosition(offset);
         }
 
         public override void Undo()
         {
-            var p  = oldLocation;
-            shape.SetPosition(p);
+            var p = oldLocation;
+            var s = shape.GetPosition();
+            undoLocation = shape.GetPosition();
+            Point offset = new Point(s.X - p.X, s.Y - p.Y);
+            shape.OffsetPosition(offset);
         }
     }
 }

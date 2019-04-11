@@ -29,6 +29,8 @@ namespace dp_drawing.Patterns.Command
 
         public override void Undo()
         {
+            Form1.ActiveForm.Controls.Remove(ornament.tb);
+            ornament.SetParent(null);
             shape.RemoveOrnament(ornament);
         }
     }

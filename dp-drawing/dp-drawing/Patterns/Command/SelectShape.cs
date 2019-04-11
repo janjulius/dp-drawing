@@ -18,12 +18,30 @@ namespace dp_drawing.Patterns.Command
 
         public override void Execute()
         {
-            throw new NotImplementedException();
+            if (DrawingInstance.Instance.FocusedShape != null)
+            {
+                if (!DrawingInstance.Instance.FocusedShapes.Contains(shape)
+                    && shape != DrawingInstance.Instance.FocusedShape)
+                {
+                    DrawingInstance.Instance.FocusedShapes.Add(shape);
+                }
+            }
+            else
+            {
+                DrawingInstance.Instance.FocusedShape = shape;
+            }
         }
 
         public override void Undo()
         {
-            throw new NotImplementedException();
+            if(DrawingInstance.Instance.FocusedShapes.Count != 0)
+            {
+                DrawingInstance.Instance.FocusedShapes.Remove(shape);
+            }
+            else if(DrawingInstance.Instance.FocusedShape != null)
+            {
+                DrawingInstance.Instance.FocusedShape = null;
+            }
         }
     }
 }

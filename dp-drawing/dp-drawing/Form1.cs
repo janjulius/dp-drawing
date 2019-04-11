@@ -30,7 +30,7 @@ namespace dp_drawing
 
         private int shapeStartIndex = 0;
 
-        string ornamentText = "Placeholder";
+        string ornamentText = "Yeet";
 
         public Form1()
         {
@@ -233,12 +233,7 @@ namespace dp_drawing
         {
             if (DrawingInstance.Instance.FocusedShape != null || DrawingInstance.Instance.FocusedShapes.Count != 0)
             {
-                foreach(var shap in DrawingInstance.Instance.FocusedShapes)
-                {
-                    DrawingInstance.Instance.FocusedShape.AddChild(shap);
-                }
-                DrawingInstance.Instance.FocusedShape = null;
-                DrawingInstance.Instance.FocusedShapes.Clear();
+                ExecuteCommand(new MakeGroup(DrawingInstance.Instance.FocusedShape, DrawingInstance.Instance.FocusedShapes));
                 MessageBox.Show("Group created");
                 return;
             }
