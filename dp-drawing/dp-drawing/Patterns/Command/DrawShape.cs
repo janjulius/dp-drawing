@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// Represents the Draw shape command
+    /// </summary>
     class DrawShape : Command
     {
         Shape.Shape shape = null;

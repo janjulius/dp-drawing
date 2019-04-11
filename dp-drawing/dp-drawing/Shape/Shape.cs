@@ -12,30 +12,32 @@ using dp_drawing.Ornaments;
 
 namespace dp_drawing.Shape
 {
+    /// <summary>
+    /// Reperesents a shape
+    /// </summary>
     public abstract class Shape : Component<Shape>
     {
-        private List<Shape> children = new List<Shape>();
-
+        //public accessable shape properties
         public Size size { get; set; }
         public Point Position { get; set; }
         public Color Color { get; set; }
-
         public PictureBox PictureBox { get; set; }
-
         public int Id { get; set; }
 
         private bool Preview = false;
         private bool isMouseDown = false;
 
-        private bool moving = false;
-        private bool resizing = false;
         ResizeMode resizeMode;
-
-        private const int BorderSize = 10;
 
         private Point[] mousePositions = new Point[3];
 
+        private List<Shape> children = new List<Shape>();
         private List<Ornament> ornaments = new List<Ornament>();
+
+        private bool moving = false;
+        private bool resizing = false;
+        
+        private const int BorderSize = 10;
 
         internal List<Ornament> GetOrnaments()
         {

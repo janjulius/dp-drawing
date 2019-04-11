@@ -8,6 +8,9 @@ using dp_drawing.Shape;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// Represents the move shape command
+    /// </summary>
     class MoveShape : Command
     {
         Shape.Shape shape;

@@ -7,6 +7,9 @@ using dp_drawing.Shape;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// represents the select shape command
+    /// </summary>
     class SelectShape : Command
     {
         Shape.Shape shape;

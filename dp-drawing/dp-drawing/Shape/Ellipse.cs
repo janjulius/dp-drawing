@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Shape
 {
+    /// <summary>
+    /// Represents the ellipse shape
+    /// </summary>
     sealed class Ellipse : Shape
     {
         public Ellipse(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)

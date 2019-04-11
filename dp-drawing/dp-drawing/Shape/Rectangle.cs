@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Shape
 {
+    /// <summary>
+    /// Represents the Rectangle shape
+    /// </summary>
     sealed class Rectangle : Shape
     {
         public Rectangle(Color c, Point location, Size size, bool preview) : base(c, location, size, preview)

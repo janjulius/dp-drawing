@@ -7,6 +7,9 @@ using dp_drawing.Shape;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// Represents the make group command
+    /// </summary>
     class MakeGroup : Command
     {
         Shape.Shape parent;

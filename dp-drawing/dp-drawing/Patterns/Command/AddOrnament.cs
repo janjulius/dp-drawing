@@ -8,6 +8,9 @@ using dp_drawing.Shape;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// repersents the addornament command
+    /// </summary>
     class AddOrnament : Command
     {
         Shape.Shape shape;

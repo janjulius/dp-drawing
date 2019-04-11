@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace dp_drawing
 {
+    /// <summary>
+    /// Represents the drawinginstance singleton
+    /// </summary>
     public sealed class DrawingInstance
     {
         private static DrawingInstance instance = null;

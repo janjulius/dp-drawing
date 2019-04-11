@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Ornaments
 {
+    /// <summary>
+    /// represents an ornament
+    /// </summary>
     public class Ornament
     {
         public string text = "";

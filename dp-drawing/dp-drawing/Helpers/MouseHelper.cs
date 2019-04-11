@@ -7,13 +7,14 @@ using System.Windows.Forms;
 
 namespace dp_drawing.Helpers
 {
+    /// <summary>
+    /// Help with mouse methods
+    /// </summary>
     class MouseHelper
     {
-        public static void set_cursor_style_move(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.SizeAll;
-        }
-
+        /// <summary>
+        /// Sets mouse style to given cursor pointer
+        /// </summary>
         public static void SetCursorStyle(Cursor style)
         {
             Cursor.Current = style;

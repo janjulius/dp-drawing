@@ -8,6 +8,11 @@ namespace dp_drawing.Helpers
 {
     class OrnamentHelper
     {
+        /// <summary>
+        /// returns an ornamentorientation from string
+        /// </summary>
+        /// <param name="or"></param>
+        /// <returns></returns>
         internal static OrnamentOrientation GetOrnamentOrientationFromString(string or)
         {
             return 

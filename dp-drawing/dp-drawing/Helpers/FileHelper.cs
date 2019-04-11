@@ -10,12 +10,19 @@ using System.Threading.Tasks;
 
 namespace dp_drawing.Helpers
 {
+    /// <summary>
+    /// Used for helping of writing and reading files
+    /// </summary>
     public class FileHelper
     {
         public List<Shape.Shape> seen = new List<Shape.Shape>();
         Shape.Shape newShape;
-        string path = @"C:\Poggers\txt.txt";
+        
 
+        /// <summary>
+        /// Writes a file to a constant path
+        /// </summary>
+        /// <returns></returns>
         public bool WriteFile()
         {
              
@@ -31,10 +38,14 @@ namespace dp_drawing.Helpers
 
             Console.WriteLine(sb.ToString());
             string[] lines = sb.ToString().Split(Environment.NewLine.ToCharArray());
-            File.WriteAllLines(path, lines);
+            File.WriteAllLines(Constants.path, lines);
             return true;
         }
 
+        /// <summary>
+        /// Recursive method to print out all the data of a shape for file saving
+        /// </summary>
+        /// <returns></returns>
         private StringBuilder GetFileString(Shape.Shape shape, StringBuilder data, int depth)
         {
             for(int i= 0; i < depth; i++)
@@ -71,9 +82,12 @@ namespace dp_drawing.Helpers
             return data;
         }
 
+        /// <summary>
+        /// reads file from constant path
+        /// </summary>
         public void ReadFile()
         {
-            string[] lines = File.ReadAllLines(path);
+            string[] lines = File.ReadAllLines(Constants.path);
             Shape.Shape lastShape = null;
             int lastTabs = 0;
 
@@ -128,17 +142,31 @@ namespace dp_drawing.Helpers
             }
         }
 
+        /// <summary>
+        /// returns true if the line contains an ornament
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private bool IsOrnament(string line)
         {
             return line.Trim('\t').StartsWith("Ornament");
         }
 
+        /// <summary>
+        /// returns true if the line contains an Ellipse or Rectangle
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private bool IsShape(string line)
         {
             return line.Trim('\t').StartsWith("Rectangle") ||
                 line.Trim('\t').StartsWith("Ellipse");
         }
 
+        /// <summary>
+        /// Creates a shape from the given string line
+        /// </summary>
+        /// <returns>Shape this method creates</returns>
         private Shape.Shape CreateShape(string line)
         {
             line.Trim('\t');
@@ -162,6 +190,10 @@ namespace dp_drawing.Helpers
             return cmd.GetShape();
         }
 
+        /// <summary>
+        /// Creates an ornament from string line and adds it to given shape
+        /// </summary>
+        /// <returns>Ornament this method created</returns>
         private Ornament CreateOrnament(string line, Shape.Shape shape)
         {
             line.Trim('\t');

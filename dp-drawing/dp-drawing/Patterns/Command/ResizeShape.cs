@@ -8,6 +8,9 @@ using dp_drawing.Shape;
 
 namespace dp_drawing.Patterns.Command
 {
+    /// <summary>
+    /// Represents the resize shape command
+    /// </summary>
     class ResizeShape : Command
     {
         Shape.Shape shape;

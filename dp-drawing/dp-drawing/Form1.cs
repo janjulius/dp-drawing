@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,26 +36,25 @@ namespace dp_drawing
         public Form1()
         {
             InitializeComponent();
-            //ShapeStartIndex = Controls.Count;
             DrawingInstance.Instance.ShapeStartIndex = Controls.Count;
             g = canvas.CreateGraphics();
             textBox1.BackColor = selectedColor;
+            this.Text = Constants.name;
         }
 
         private void canvas_Load(object sender, EventArgs e)
         {
-            this.Paint += canvas_Paint;
             this.Click += canvas_Click;
         }
 
         private void canvas_Click(object sender, EventArgs e)
         {
-           
+            DrawingInstance.Instance.FocusedShape = null;
+            DrawingInstance.Instance.FocusedShapes.Clear();
         }
 
         private void colorpicker_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine("Color picker opened");
             ColorDialog MyDialog = new ColorDialog();
             MyDialog.AllowFullOpen = true;
             MyDialog.ShowHelp = true;
@@ -74,28 +74,6 @@ namespace dp_drawing
         private void rectButton_Click(object sender, EventArgs e)
         {
             SelectedShape = Shapes.RECTANGLE;
-        }
-
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            if (SelectedShape == Shapes.ELLIPSE)
-            {
-
-                Graphics G = e.Graphics;
-                    using (Pen myPen = new Pen(System.Drawing.Color.MediumPurple, 5))
-                    {
-                    Point relativePoint =
-               (this.PointToClient(
-                   new Point(
-                       Cursor.Position.X,
-                       Cursor.Position.Y)));
-                    Rectangle myRectangle = new Rectangle(new Point(relativePoint.X, relativePoint.Y), new Size(0, 0));
-                            myRectangle.Inflate(new Size(20, 20));
-                            G.DrawEllipse(myPen, myRectangle);
-                        
-                    }
-                
-            }
         }
 
         private void canvas_MouseDown(object sender, MouseEventArgs e)
@@ -140,6 +118,10 @@ namespace dp_drawing
             }
         }
 
+        /// <summary>
+        /// returns point of cursor on the form
+        /// </summary>
+        /// <returns></returns>
         private Point GetCursorRelativePoint()
         {
             return
@@ -179,13 +161,18 @@ namespace dp_drawing
                 }
             }
         }
-
+        
         private Size GetShapeSize(Point a, Point b)
         {
             var sub = Point.Subtract(a, new Size(b));
             return new Size(Math.Abs(sub.X), Math.Abs(sub.Y));
         }
 
+        /// <summary>
+        /// Executes a command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         private bool ExecuteCommand(Command command)
         {
             DrawingInstance.Instance.RedoStack.Clear();
