@@ -36,7 +36,12 @@ namespace dp_drawing.Shape
         private Point[] mousePositions = new Point[3];
 
         private List<Ornament> ornaments = new List<Ornament>();
-        
+
+        internal List<Ornament> GetOrnaments()
+        {
+            return ornaments;
+        }
+
         /// <summary>
         /// Create a shape
         /// </summary>
@@ -320,6 +325,10 @@ namespace dp_drawing.Shape
         public void ClearChildren()
         {
             this.children.Clear();
+        }
+        public List<Shape> GetChildren()
+        {
+            return children;
         }
     }
 }

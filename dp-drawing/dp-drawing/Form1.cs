@@ -217,16 +217,22 @@ namespace dp_drawing
 
         private void UndoButton_Click(object sender, EventArgs e)
         {
-            Command cmd = DrawingInstance.Instance.Commands.Pop();
-            DrawingInstance.Instance.RedoStack.Push(cmd);
-            cmd.Undo();
+            if (DrawingInstance.Instance.Commands.Count != 0)
+            {
+                Command cmd = DrawingInstance.Instance.Commands.Pop();
+                DrawingInstance.Instance.RedoStack.Push(cmd);
+                cmd.Undo();
+            }
         }
 
         private void RedoButton_Click(object sender, EventArgs e)
         {
-            Command cmd = DrawingInstance.Instance.RedoStack.Pop();
-            DrawingInstance.Instance.Commands.Push(cmd);
-            cmd.Redo();
+            if (DrawingInstance.Instance.RedoStack.Count != 0)
+            {
+                Command cmd = DrawingInstance.Instance.RedoStack.Pop();
+                DrawingInstance.Instance.Commands.Push(cmd);
+                cmd.Redo();
+            }
         }
 
         private void MakeGroupButton_Click(object sender, EventArgs e)
@@ -259,6 +265,18 @@ namespace dp_drawing
         {
             TextBox objTextBox = (TextBox)sender;
             ornamentText = objTextBox.Text;
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            var fh = new FileHelper();
+            fh.WriteFile();
+        }
+
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            var fh = new FileHelper();
+            fh.ReadFile();
         }
     }
 }

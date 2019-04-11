@@ -64,13 +64,14 @@ namespace dp_drawing.Patterns.Command
                 DrawingInstance.Instance.Shapes.Remove(this.shape);
         }
 
+        public Shape.Shape GetShape()
+        {
+            return this.shape;
+        }
+
         public bool IsPreview()
         {
             return preview;
         }
-        
-        
-
-
     }
 }

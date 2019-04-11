@@ -19,6 +19,7 @@ namespace dp_drawing.Ornaments
         {
             tb = new TextBox();
             tb.Text = text;
+            this.text = text;
             tb.Enabled = false;
             tb.TextAlign = HorizontalAlignment.Center;
             parent = shape;

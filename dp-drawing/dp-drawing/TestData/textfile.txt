@@ -1,0 +1,8 @@
+Rectangle 289 138 68 45 147 112 219
+Ornament Right "xD"
+	Ellipse 412 256 71 67 0 0 0
+Rectangle 644 218 53 68 0 0 0
+Ornament Bottom ":)"
+	Ellipse 820 336 68 78 0 0 0
+Rectangle 851 96 0 0 147 112 219
+
