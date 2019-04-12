@@ -50,7 +50,6 @@ namespace dp_drawing.Patterns.Command
                 {
                     DrawingInstance.Instance.ShapeStartIndex++;
                     DrawingInstance.Instance.Shapes.Add(this.shape);
-                    Console.WriteLine($@"{location} + {size} = {location+size}");
                 }
                 shape.PictureBox.BringToFront();
             }

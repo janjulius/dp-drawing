@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="dp_drawing.Constants" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAEAAAACAIAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.DrawingInstance" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAgAIAAAAAAAAAAIAACQAAABAAgAAQAAIAIAAAAA=</HashCode>
+      <FileName>DrawingInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Helpers.FileHelper" Collapsed="true">
+    <Position X="7.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAxRABAAAAAAAAAAAAAAAAAAAACAACAAA=</HashCode>
+      <FileName>Helpers\FileHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Helpers.MouseHelper" Collapsed="true">
+    <Position X="6" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\MouseHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Helpers.OrnamentHelper" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\OrnamentHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Ornaments.Ornament" Collapsed="true">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAADBEAAAAAAAAAAAAAAAIAEAAACAAAAA=</HashCode>
+      <FileName>Ornaments\Ornament.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.ResizeShape" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAQBAQAAAAAAAAAABAAAAABAAAAAAAABAA=</HashCode>
+      <FileName>Patterns\Command\ResizeShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.SelectShape" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Patterns\Command\SelectShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.MoveShape" Collapsed="true">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQBAQAAAAAAAABAAAAAAAAABAAQAAARAA=</HashCode>
+      <FileName>Patterns\Command\MoveShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.MakeGroup" Collapsed="true">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAABARAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Patterns\Command\MakeGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.DrawShape" Collapsed="true">
+    <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAABAQCAIAAAAACAAAABAAABAAAAAAABAA=</HashCode>
+      <FileName>Patterns\Command\DrawShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.Command" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAQAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Patterns\Command\Command.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Command.AddOrnament" Collapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Patterns\Command\AddOrnament.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Patterns.Composite.Component&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Patterns\Composite\Component.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Shape.Ellipse" Collapsed="true">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Shape\Ellipse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EllipsePictureBox" Collapsed="true">
+    <Position X="11" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shape\EllipsePictureBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Shape.Rectangle" Collapsed="true">
+    <Position X="10.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Shape\Rectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dp_drawing.Shape.Shape" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgjgIQECKACECTgAIBIEAABjApA4gAgBAQEgQAAAAY=</HashCode>
+      <FileName>Shape\Shape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="OrnamentOrientation" Collapsed="true">
+    <Position X="9.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAACACAAAAAAAA=</HashCode>
+      <FileName>Enums\OrnamentOrientation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ResizeMode" Collapsed="true">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACEAAAAAAAAAAAQgAAAAAAAAAAhCIAAA=</HashCode>
+      <FileName>Enums\ResizeMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Shapes" Collapsed="true">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAIAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Shapes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
